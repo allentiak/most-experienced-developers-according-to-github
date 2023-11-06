@@ -1,5 +1,5 @@
 (ns allentiak.most-experienced-developers-according-to-github.core
- (:gen-class))
+  (:gen-class))
 
 (defn foo []
   1)
