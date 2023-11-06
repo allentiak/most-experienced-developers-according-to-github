@@ -2,6 +2,7 @@
 {:tests [{:id          :unit
           :test-paths  ["test"]
           :ns-patterns [".*-test"]}]
-          :reporter kaocha.report.progress/report
-          :plugins [:kaocha.plugin/profiling :kaocha.plugin/notifier]
-}
+ :reporter kaocha.report.progress/report
+ :plugins [:kaocha.plugin/profiling
+           :kaocha.plugin/notifier
+           :noyoda.plugin/swap-actual-and-expected]}

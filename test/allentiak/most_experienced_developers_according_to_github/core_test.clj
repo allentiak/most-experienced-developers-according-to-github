@@ -6,4 +6,4 @@
 
 (deftest smoke-test
   (testing "this should fail"
-    (expect (= 2 (sut/foo)))))
+    (expect (= (sut/foo) 2))))
