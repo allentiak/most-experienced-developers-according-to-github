@@ -22,3 +22,17 @@
   (->
    (http/get (sut/members-endpoint-url {:accept :json}))
    :body))
+
+(deftest github-user-rest-api-test
+  (testing "actual GitHub REST API JSON response"
+    (let [sample-login "allentiak"
+          sample-login-endpoint-url (sut/get-user-endpoint-url sut/root-endpoint-url sample-login)
+          response-body (:body (http/get sample-login-endpoint-url))
+          json-response (json/read-str response-body
+                                       :key-fn keyword)]
+      (expect (m/validate sut/user-json-schema json-response))))
+  (testing "manually downloaded minimized JSON files"
+    (let [mocked-json-response (json/read-str
+                                (slurp "resources/user--minimized.json")
+                                :key-fn keyword)]
+      (expect (m/validate sut/user-json-schema mocked-json-response)))))

@@ -26,6 +26,14 @@
      [:login
       [:string {:min 1}]]]]))
 
+(def user-json-schema
+  (m/schema
+   [:map
+    [:login
+     [:string {min 1}]]
+    [:name
+     [:string {min 1}]]]))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
