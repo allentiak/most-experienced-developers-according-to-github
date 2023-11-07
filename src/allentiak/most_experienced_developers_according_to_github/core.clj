@@ -17,7 +17,7 @@
   (str root-endpoint-url "/users/" login))
 
 (defn get-repos-per-login-endpoint-url [root-endpoint-url login]
-  (str root-endpoint-url "/users/" login "/repos"))
+  (str (get-user-endpoint-url root-endpoint-url login) "/repos"))
 
 (def members-json-schema
   (m/schema
