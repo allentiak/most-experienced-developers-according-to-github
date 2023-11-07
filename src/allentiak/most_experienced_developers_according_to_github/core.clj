@@ -3,6 +3,22 @@
   (:require
    [malli.core :as m]))
 
+(def ^:const root-endpoint-url "https://api.github.com")
+
+(def ^:const org-name "codecentric")
+
+(defn get-members-endpoint-url [root-endpoint-url org-name]
+  (str root-endpoint-url "/orgs/" org-name "/members"))
+
+(def ^:const members-endpoint-url
+  (get-members-endpoint-url root-endpoint-url org-name))
+
+(defn get-user-endpoint-url [root-endpoint-url login]
+  (str root-endpoint-url "/users/" login))
+
+(defn get-repos-per-login-endpoint-url [root-endpoint-url login]
+  (str root-endpoint-url "/users/" login "/repos"))
+
 (def members-json-schema
   (m/schema
    [:vector

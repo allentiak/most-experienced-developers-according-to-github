@@ -9,7 +9,7 @@
 
 (deftest github-members-rest-api
   (testing "actual GitHub REST API JSON response..."
-    (let [response-body (:body (http/get "https://api.github.com/orgs/codecentric/members"))
+    (let [response-body (:body (http/get sut/members-endpoint-url))
           json-response (json/read-str response-body :key-fn keyword)]
       (expect (m/validate sut/members-json-schema json-response))))
   (testing "manually downloaded minimized JSON files..."
@@ -20,5 +20,5 @@
 
 (comment
   (->
-   (http/get "https://api.github.com/orgs/codecentric/members" {:accept :json})
+   (http/get (sut/members-endpoint-url {:accept :json}))
    :body))
