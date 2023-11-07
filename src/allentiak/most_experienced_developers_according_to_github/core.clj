@@ -65,7 +65,7 @@
                  :key-fn keyword)
 
   (m/validate members-json-schema (json/read-str (slurp "resources/members--minimized.json")))
-  (m/explain members-json-schema (j))
+  (m/explain members-json-schema (json-sample-file))
   (m/validate members-json-schema (json-sample-file))
   (m/explain members-json-schema (json-sample-file))
   ,)
