@@ -2,16 +2,23 @@
   (:require
    [allentiak.most-experienced-developers-according-to-github.core :as sut]
    [clj-http.client :as http]
+   [clojure.data.json :as json]
    [clojure.test :refer [deftest testing]]
    [expectations.clojure.test :refer [expect]]
    [malli.core :as m]))
 
-(deftest github-rest-api
-  (testing "querying GitHub REST API..."
-    (let [response-body (:body (http/get "https://api.github.com/orgs/codecentric/members"))]
-      (expect (m/validate sut/members-json-schema response-body)))))
+(deftest github-members-rest-api
+  (testing "actual GitHub REST API JSON response..."
+    (let [response-body (:body (http/get "https://api.github.com/orgs/codecentric/members"))
+          json-response (json/read-str response-body :key-fn keyword)]
+      (expect (m/validate sut/members-json-schema json-response))))
+  (testing "manually downloaded minimized JSON files..."
+    (let [mocked-json-response (json/read-str
+                                (slurp "resources/members--minimized.json")
+                                :key-fn keyword)]
+      (expect (m/validate sut/members-json-schema mocked-json-response)))))
 
 (comment
   (->
-    (http/get "https://api.github.com/orgs/codecentric/members" {:accept :json})
-    :body))
+   (http/get "https://api.github.com/orgs/codecentric/members" {:accept :json})
+   :body))
