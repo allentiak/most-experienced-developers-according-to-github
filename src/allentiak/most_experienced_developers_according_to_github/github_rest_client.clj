@@ -1,6 +1,7 @@
 (ns allentiak.most-experienced-developers-according-to-github.github-rest-client
   (:require
-   [malli.core :as m]))
+   [malli.core :as m]
+   [allentiak.most-experienced-developers-according-to-github.github-rest-client.schemas :as schemas]))
 
 (def ^:const root-endpoint-url "https://api.github.com")
 
@@ -18,41 +19,11 @@
 (defn get-repos-per-login-endpoint-url [root-endpoint-url login]
   (str (get-user-endpoint-url root-endpoint-url login) "/repos"))
 
-(def members-response-schema
-  (m/schema
-   [:vector
-    [:map
-     [:login
-      [:string {:min 1}]]]]))
-
-(def login-response-schema
-  (m/schema
-   [:map
-    [:login
-     [:string {min 1}]]
-    [:name
-     [:string {min 1}]]]))
-
-(def repos-response-schema
-  (m/schema
-   [:vector
-    [:map
-     [:owner
-      [:map
-       [:login
-        [:string {min 1}]]]]
-     [:name
-      [:string {min 1}]]
-     [:language
-      [:maybe [:string {min 1}]]]]]))
-
-
-
 (comment
   (require '[malli.experimental.describe :as med])
   (require '[clojure.data.json :as json])
   (require '[clojure.pprint :as pprint])
-
+  (require '[allentiak.most-experienced-developers-according-to-github.github-rest-client.schemas :as schemas])
   (med/describe [:map {:closed true}
                  [:x {:optional true} int?]
                  [:y :boolean]])
@@ -73,8 +44,7 @@
   (json/read-str "[{\"login\": \"soitensa\"}, {\"login\":\"rtdud\"}]"
                  :key-fn keyword)
 
-  (m/validate members-response-schema (json/read-str (slurp "resources/members--minimized.json")))
-  (m/explain members-response-schema (json-sample-file))
-  (m/validate members-response-schema (json-sample-file))
-  (m/explain members-response-schema (json-sample-file))
-  ,)
+  (m/validate schemas/members-response (json/read-str (slurp "resources/members--minimized.json")))
+  (m/explain schemas/members-response (json-sample-file))
+  (m/validate schemas/members-response (json-sample-file))
+  (m/explain schemas/members-response (json-sample-file)))
