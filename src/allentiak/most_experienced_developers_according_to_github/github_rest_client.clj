@@ -18,14 +18,14 @@
 (defn get-repos-per-login-endpoint-url [root-endpoint-url login]
   (str (get-user-endpoint-url root-endpoint-url login) "/repos"))
 
-(def members-json-schema
+(def members-response-schema
   (m/schema
    [:vector
     [:map
      [:login
       [:string {:min 1}]]]]))
 
-(def user-json-schema
+(def login-response-schema
   (m/schema
    [:map
     [:login
@@ -33,7 +33,7 @@
     [:name
      [:string {min 1}]]]))
 
-(def repos-per-login-json-schema
+(def repos-response-schema
   (m/schema
    [:vector
     [:map
@@ -73,8 +73,8 @@
   (json/read-str "[{\"login\": \"soitensa\"}, {\"login\":\"rtdud\"}]"
                  :key-fn keyword)
 
-  (m/validate members-json-schema (json/read-str (slurp "resources/members--minimized.json")))
-  (m/explain members-json-schema (json-sample-file))
-  (m/validate members-json-schema (json-sample-file))
-  (m/explain members-json-schema (json-sample-file))
+  (m/validate members-response-schema (json/read-str (slurp "resources/members--minimized.json")))
+  (m/explain members-response-schema (json-sample-file))
+  (m/validate members-response-schema (json-sample-file))
+  (m/explain members-response-schema (json-sample-file))
   ,)
