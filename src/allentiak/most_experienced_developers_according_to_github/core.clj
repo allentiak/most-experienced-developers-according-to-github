@@ -34,6 +34,15 @@
     [:name
      [:string {min 1}]]]))
 
+(def repos-per-login-json-schema
+  (m/schema
+   [:vector
+    [:map
+     [:name
+      [:string {min 1}]]
+     [:language
+      [:maybe [:string {min 1}]]]]]))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]

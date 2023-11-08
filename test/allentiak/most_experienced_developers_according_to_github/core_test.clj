@@ -36,3 +36,17 @@
                                 (slurp "resources/user--minimized.json")
                                 :key-fn keyword)]
       (expect (m/validate sut/user-json-schema mocked-json-response)))))
+
+(deftest github-repos-rest-api-test
+  (testing "actual GitHub REST API JSON response"
+    (let [sample-login "allentiak"
+          repos-per-sample-login-endpoint-url (sut/get-repos-per-login-endpoint-url sut/root-endpoint-url sample-login)
+          response-body (:body (http/get repos-per-sample-login-endpoint-url))
+          json-response (json/read-str response-body
+                                       :key-fn keyword)]
+      (expect (m/validate sut/repos-per-login-json-schema json-response))))
+  (testing "manually downloaded minimized JSON files"
+    (let [mocked-json-response (json/read-str
+                                (slurp "resources/repos--allentiak--minimized.json")
+                                :key-fn keyword)]
+      (expect (m/validate sut/repos-per-login-json-schema mocked-json-response)))))

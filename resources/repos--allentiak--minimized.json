@@ -1,0 +1,14 @@
+[
+  {
+    "name": ".clojure",
+    "language": null
+  },
+  {
+    "name": ".spacemacs.d",
+    "language": "Emacs Lisp"
+  },
+  {
+    "name": "allentiak.github.io",
+    "language": "HTML"
+  }
+]
