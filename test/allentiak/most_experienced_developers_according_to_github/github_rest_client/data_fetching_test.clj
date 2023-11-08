@@ -1,4 +1,4 @@
-(ns allentiak.most-experienced-developers-according-to-github.github-rest-client-test
+(ns allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching-test
   (:require
    [allentiak.most-experienced-developers-according-to-github.github-rest-client.endpoints :as endpoints]
    [allentiak.most-experienced-developers-according-to-github.github-rest-client.schemas :as schemas]
@@ -8,7 +8,7 @@
    [expectations.clojure.test :refer [expect]]
    [malli.core :as m]))
 
-(deftest org-members-fetch-test
+(deftest org-members-fetching-test
   (testing "actual GitHub REST API JSON response"
     (let [members-response-body-json (:body (http/get endpoints/members-url))
           members-response-body-map (json/read-str members-response-body-json :key-fn keyword)]
@@ -24,7 +24,7 @@
    (http/get (endpoints/members-url {:accept :json}))
    :body))
 
-(deftest login-fetch-test
+(deftest login-fetching-test
   (testing "actual GitHub REST API JSON response"
     (let [sample-login "allentiak"
           sample-login-endpoint-url (endpoints/get-user-url endpoints/root-url sample-login)
@@ -38,7 +38,7 @@
                                           :key-fn keyword)]
       (expect (m/validate schemas/login-response mocked-login-response-body-map)))))
 
-(deftest repos-fetch-test
+(deftest repos-fetching-test
   (testing "actual GitHub REST API JSON response"
     (let [sample-login "allentiak"
           repos-per-sample-login-endpoint-url (endpoints/get-repos-per-login-url endpoints/root-url sample-login)
