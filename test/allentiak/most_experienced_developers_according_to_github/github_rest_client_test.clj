@@ -8,7 +8,7 @@
    [expectations.clojure.test :refer [expect]]
    [malli.core :as m]))
 
-(deftest github-org-members-rest-api-test
+(deftest org-members-fetch-test
   (testing "actual GitHub REST API JSON response"
     (let [members-response-body-json (:body (http/get sut/members-endpoint-url))
           members-response-body-map (json/read-str members-response-body-json :key-fn keyword)]
@@ -24,7 +24,7 @@
    (http/get (sut/members-endpoint-url {:accept :json}))
    :body))
 
-(deftest github-login-rest-api-test
+(deftest login-fetch-test
   (testing "actual GitHub REST API JSON response"
     (let [sample-login "allentiak"
           sample-login-endpoint-url (sut/get-user-endpoint-url sut/root-endpoint-url sample-login)
@@ -38,7 +38,7 @@
                                           :key-fn keyword)]
       (expect (m/validate schemas/login-response mocked-login-response-body-map)))))
 
-(deftest github-repos-rest-api-test
+(deftest repos-fetch-test
   (testing "actual GitHub REST API JSON response"
     (let [sample-login "allentiak"
           repos-per-sample-login-endpoint-url (sut/get-repos-per-login-endpoint-url sut/root-endpoint-url sample-login)
