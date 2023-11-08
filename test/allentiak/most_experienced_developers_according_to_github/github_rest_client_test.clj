@@ -1,6 +1,6 @@
-(ns allentiak.most-experienced-developers-according-to-github.core-test
+(ns allentiak.most-experienced-developers-according-to-github.github-rest-client-test
   (:require
-   [allentiak.most-experienced-developers-according-to-github.core :as sut]
+   [allentiak.most-experienced-developers-according-to-github.github-rest-client :as sut]
    [clj-http.client :as http]
    [clojure.data.json :as json]
    [clojure.test :refer [deftest testing]]
