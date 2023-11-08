@@ -1,13 +1,22 @@
 [
   {
+    "owner": {
+                "login": "allentiak"
+             },
     "name": ".clojure",
     "language": null
   },
   {
+    "owner": {
+                "login": "allentiak"
+             },
     "name": ".spacemacs.d",
     "language": "Emacs Lisp"
   },
   {
+    "owner": {
+                "login": "allentiak"
+             },
     "name": "allentiak.github.io",
     "language": "HTML"
   }

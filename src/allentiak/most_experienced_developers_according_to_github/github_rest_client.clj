@@ -37,6 +37,10 @@
   (m/schema
    [:vector
     [:map
+     [:owner
+      [:map
+       [:login
+        [:string {min 1}]]]]
      [:name
       [:string {min 1}]]
      [:language
