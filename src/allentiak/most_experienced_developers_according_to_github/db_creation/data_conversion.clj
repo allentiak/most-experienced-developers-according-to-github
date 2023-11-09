@@ -1,4 +1,4 @@
-(ns allentiak.most-experienced-developers-according-to-github.db-creation
+(ns allentiak.most-experienced-developers-according-to-github.db-creation.data-conversion
   (:require
    [allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching :as fetch]
    [clojure.data.json :as json]))
