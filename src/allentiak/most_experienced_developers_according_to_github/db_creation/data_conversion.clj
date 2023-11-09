@@ -65,3 +65,15 @@
   (take 2 (shuffle (generate-repos-map #{"allentiak", "puredanger"})))
 ;; => ({:owner "puredanger", :name "clojure-1", :main-language nil} {:owner "allentiak", :name "mage", :main-language "Java"})
   ,)
+
+(defn generate-languages-map
+  [repos-map]
+  (let [languages-set (set (map :main-language repos-map))]
+    (into #{} (map #(hash-map :name %) (filter some? languages-set)))))
+
+(comment
+  (into #{} (map #(hash-map :name %) (filter some? #{"one" nil})))
+;; => #{{:name "one"}}
+  (take 5 (generate-languages-map (generate-repos-map #{"allentiak", "puredanger"})))
+;; => ({:name "CSS"} {:name "TypeScript"} {:name "Clojure"} {:name "Java"} {:name "Shell"})
+  ,)
