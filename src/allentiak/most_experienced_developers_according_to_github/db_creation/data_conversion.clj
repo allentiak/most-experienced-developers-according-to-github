@@ -32,3 +32,36 @@
   (generate-members-map #{"allentiak", "puredanger"})
 ;; => ({:login "allentiak", :name "Leandro Doctors"} {:login "puredanger", :name "Alex Miller"})
   ,)
+
+(defn- generate-repo-per-login
+  [repo-from-repos-response]
+  {:owner (:login (:owner repo-from-repos-response))
+   :name (:name repo-from-repos-response)
+   :main-language (:language repo-from-repos-response)})
+
+(comment
+  (generate-repo-per-login {:owner {:login "allentiak"}, :name "my-repo", :language "my-language"})
+;; => {:name "my-repo", :main-language "my-language", :owner "allentiak"}
+  (generate-repo-per-login {:owner {:login "allentiak"}, :name "my-other-repo", :language nil})
+  ;; => {:name "my-other-repo", :main-language nil, :owner "allentiak"}
+  ,)
+
+(defn- generate-repos-per-login
+  [login]
+  (let [user-repos-response-map (fetch/user-repos-response-map login)]
+    (map generate-repo-per-login user-repos-response-map)))
+
+(comment
+  (let [login "allentiak"]
+    (take 3 (generate-repos-per-login login)))
+;; => ({:name ".clojure", :main-language nil, :owner "allentiak"} {:name ".spacemacs.d", :main-language "Emacs Lisp", :owner "allentiak"} {:name "allentiak.github.io", :main-language "HTML", :owner "allentiak"})
+  ,)
+
+(defn generate-repos-map
+  [login-set]
+  (set (flatten (map generate-repos-per-login login-set))))
+
+(comment
+  (take 2 (shuffle (generate-repos-map #{"allentiak", "puredanger"})))
+;; => ({:owner "puredanger", :name "clojure-1", :main-language nil} {:owner "allentiak", :name "mage", :main-language "Java"})
+  ,)
