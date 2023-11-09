@@ -3,7 +3,7 @@
    [allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching :as fetch]
    [clojure.data.json :as json]))
 
-(defn generate-login-set
+(defn- generate-login-set
   [members-response-map]
   (set (map :login members-response-map)))
 
@@ -12,13 +12,16 @@
 ;; => #{"user-1" "user-2"}
   ,)
 
-(defn generate-single-member-map
+(defn- generate-single-member-map
   [login]
-  {:login login
-   :name (fetch/user-name login)})
+  (let [login-response-map (fetch/login-response-map login)]
+    {:login login
+     :name (:name login-response-map)}))
 
 (comment
-  (generate-single-member-map {:login "blah"})
+  (let [login "allentiak"]
+    (fetch/login-response-map login)
+    (generate-single-member-map login))
   ,)
 
 (defn generate-members-map
@@ -26,10 +29,6 @@
   (map generate-single-member-map login-set))
 
 (comment
-  (require '[clojure.data.json :as json])
-  (require '[clojure.pprint :as pprint])
-  (def members-json-file
-    (slurp "resources/members--minimized.json"))
-  (let [members-json (json/read-str members-json-file
-                                    :key-fn keyword)]
-    (set (map :login members-json))))
+  (generate-members-map #{"allentiak", "puredanger"})
+;; => ({:login "allentiak", :name "Leandro Doctors"} {:login "puredanger", :name "Alex Miller"})
+  ,)
