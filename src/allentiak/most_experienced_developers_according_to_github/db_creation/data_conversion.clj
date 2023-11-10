@@ -1,28 +1,27 @@
 (ns allentiak.most-experienced-developers-according-to-github.db-creation.data-conversion
   (:require
-   [allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching :as fetch]
-   [clojure.data.json :as json]))
+   [allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching :as fetch]))
 
-(defn- generate-login-set
+(defn generate-members-login-set
   [members-response-map]
   (set (map :login members-response-map)))
 
 (comment
-  (generate-login-set #{{:login "user-1" :some-other-key "whatever"},
-                        {:login "user-2" :another-irrelevant-key nil}})
+  (generate-members-login-set #{{:login "user-1" :some-other-key "whatever"},
+                                {:login "user-2" :another-irrelevant-key nil}})
 ;; => #{"user-1" "user-2"}
   ,)
 
 (defn- generate-single-member-map
-  [login]
-  (let [login-response-map (fetch/login-response-map login)]
-    {:login login
-     :name (:name login-response-map)}))
+  [login-response-map]
+  {:login (:login login-response-map)
+   :name (:name login-response-map)})
 
 (comment
   (fetch/login-response-map "allentiak")
 ;; => {:html_url "https://github.com/allentiak", :gravatar_id "", :followers_url "https://api.github.com/users/allentiak/followers", :subscriptions_url "https://api.github.com/users/allentiak/subscriptions", :site_admin false, :email nil, :following_url "https://api.github.com/users/allentiak/following{/other_user}", :hireable true, :name "Leandro Doctors", :node_id "MDQ6VXNlcjE5MjIyOTc=", :type "User", :twitter_username nil, :received_events_url "https://api.github.com/users/allentiak/received_events", :login "allentiak", :following 14, :updated_at "2023-10-09T12:42:25Z", :bio nil, :organizations_url "https://api.github.com/users/allentiak/orgs", :id 1922297, :events_url "https://api.github.com/users/allentiak/events{/privacy}", :url "https://api.github.com/users/allentiak", :public_gists 0, :repos_url "https://api.github.com/users/allentiak/repos", :public_repos 56, :starred_url "https://api.github.com/users/allentiak/starred{/owner}{/repo}", :location "The world's capital of Tango ;-)", :blog "", :followers 34, :company nil, :gists_url "https://api.github.com/users/allentiak/gists{/gist_id}", :created_at "2012-07-04T14:13:22Z", :avatar_url "https://avatars.githubusercontent.com/u/1922297?v=4"}
-  (generate-single-member-map "allentiak")
+
+  (generate-single-member-map (fetch/login-response-map "allentiak"))
   ;; => {:login "allentiak", :name "Leandro Doctors"}
   ,)
 
