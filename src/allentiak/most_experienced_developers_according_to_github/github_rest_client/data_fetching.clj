@@ -20,7 +20,7 @@ org-members-response-map
   ;; it works - the response is just too big to be shown here :)
   ,)
 
-(defn- login-response-map
+(defn login-response-map
   ([root-endpoint-url login]
    (let [user-endpoint-url (endpoints/get-user-url root-endpoint-url login)
          login-response-body (:body (http/get user-endpoint-url))
