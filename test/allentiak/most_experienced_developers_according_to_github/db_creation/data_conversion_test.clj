@@ -1,4 +1,4 @@
-(ns allentiak.most-experienced-developers-according-to-github.db-creation-test
+(ns allentiak.most-experienced-developers-according-to-github.db-creation.data-conversion-test
   (:require
    [allentiak.most-experienced-developers-according-to-github.db-creation.data-conversion :as sut]
    [allentiak.most-experienced-developers-according-to-github.db-creation.schemas :as schemas]
