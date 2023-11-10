@@ -20,17 +20,17 @@
 (comment
   (fetch/login-response-map "allentiak")
 ;; => {:html_url "https://github.com/allentiak", :gravatar_id "", :followers_url "https://api.github.com/users/allentiak/followers", :subscriptions_url "https://api.github.com/users/allentiak/subscriptions", :site_admin false, :email nil, :following_url "https://api.github.com/users/allentiak/following{/other_user}", :hireable true, :name "Leandro Doctors", :node_id "MDQ6VXNlcjE5MjIyOTc=", :type "User", :twitter_username nil, :received_events_url "https://api.github.com/users/allentiak/received_events", :login "allentiak", :following 14, :updated_at "2023-10-09T12:42:25Z", :bio nil, :organizations_url "https://api.github.com/users/allentiak/orgs", :id 1922297, :events_url "https://api.github.com/users/allentiak/events{/privacy}", :url "https://api.github.com/users/allentiak", :public_gists 0, :repos_url "https://api.github.com/users/allentiak/repos", :public_repos 56, :starred_url "https://api.github.com/users/allentiak/starred{/owner}{/repo}", :location "The world's capital of Tango ;-)", :blog "", :followers 34, :company nil, :gists_url "https://api.github.com/users/allentiak/gists{/gist_id}", :created_at "2012-07-04T14:13:22Z", :avatar_url "https://avatars.githubusercontent.com/u/1922297?v=4"}
-
   (generate-single-member-map (fetch/login-response-map "allentiak"))
   ;; => {:login "allentiak", :name "Leandro Doctors"}
   ,)
 
 (defn generate-members-map
-  [login-set]
-  (map generate-single-member-map login-set))
+  [login-response-maps]
+  (map generate-single-member-map login-response-maps))
 
 (comment
-  (generate-members-map #{"allentiak", "puredanger"})
+  (fetch/login-set-response-maps #{"allentiak" "puredanger"})
+  (generate-members-map (fetch/login-set-response-maps #{"allentiak", "puredanger"}))
 ;; => ({:login "allentiak", :name "Leandro Doctors"} {:login "puredanger", :name "Alex Miller"})
   ,)
 

@@ -8,10 +8,12 @@
    [malli.core :as m]))
 
 (deftest table-maps-creation-test
+  ;; FIXME: this test fails
   (testing "user table map creation"
     (let [members-response-body-map (json/read-str
                                      (slurp "resources/members--minimized.json")
                                      :key-fn keyword)
-          generated-members-map (sut/generate-members-map members-response-body-map)]
+          members-response-maps (sut/generate-members-map members-response-body-map)
+          generated-members-map (sut/generate-members-map members-response-maps)]
 
       (expect (m/validate schemas/members-map generated-members-map)))))
