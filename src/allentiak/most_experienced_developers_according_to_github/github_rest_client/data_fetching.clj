@@ -13,7 +13,6 @@
      members-response-map))
   ([org-name]
    (org-members-response-map endpoints/root-url org-name)))
-org-members-response-map
 
 (comment
   (org-members-response-map "codecentric")
