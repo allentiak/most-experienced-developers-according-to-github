@@ -29,8 +29,8 @@
   (map generate-single-member-map login-response-maps))
 
 (comment
-  (fetch/login-set-response-maps #{"allentiak" "puredanger"})
-  (generate-members-map (fetch/login-set-response-maps #{"allentiak", "puredanger"}))
+  (fetch/login-set-responses-seq #{"allentiak" "puredanger"})
+  (generate-members-map (fetch/login-set-responses-seq #{"allentiak", "puredanger"}))
 ;; => ({:login "allentiak", :name "Leandro Doctors"} {:login "puredanger", :name "Alex Miller"})
   ,)
 
@@ -49,7 +49,7 @@
 
 (defn- generate-repos-per-login
   [login]
-  (let [user-repos-response-map (fetch/user-repos-response-map login)]
+  (let [user-repos-response-map (fetch/user-repos-response-vector login)]
     (map generate-repo-per-login user-repos-response-map)))
 
 (comment
