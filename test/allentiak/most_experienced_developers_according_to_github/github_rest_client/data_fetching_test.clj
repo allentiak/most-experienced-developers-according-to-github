@@ -28,10 +28,14 @@
     (let [sample-user "allentiak"]
       (expect (m/validate schemas/user-response-map (fetch/user-response-map endpoints/root-url sample-user)))))
   (testing "manually downloaded minimized JSON files"
-    (let [mocked-user-response-body-map (json/read-str
-                                         (slurp "resources/user--minimized.json")
-                                         :key-fn keyword)]
-      (expect (m/validate schemas/user-response-map mocked-user-response-body-map)))))
+    (let [mocked-allentiak-user-response-body-map (json/read-str
+                                                   (slurp "resources/user--allentiak--minimized.json")
+                                                   :key-fn keyword)
+          mocked-puredanger-user-response-body-map (json/read-str
+                                                    (slurp "resources/user--puredanger--minimized.json")
+                                                    :key-fn keyword)]
+      (expect (m/validate schemas/user-response-map mocked-allentiak-user-response-body-map))
+      (expect (m/validate schemas/user-response-map mocked-puredanger-user-response-body-map)))))
 
 (deftest user-repos-fetching-test
   (testing "actual GitHub REST API JSON response"
