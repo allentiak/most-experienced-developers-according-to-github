@@ -20,7 +20,7 @@ org-members-response-map
   ;; it works - the response is just too big to be shown here :)
   ,)
 
-(defn login-response-map
+(defn user-response-map
   ([root-endpoint-url login]
    (let [user-endpoint-url (endpoints/get-user-url root-endpoint-url login)
          login-response-body (:body (http/get user-endpoint-url))
@@ -28,16 +28,16 @@ org-members-response-map
                                            :key-fn keyword)]
      login-response-map))
   ([login]
-   (login-response-map endpoints/root-url login)))
+   (user-response-map endpoints/root-url login)))
 
 (comment
-  (login-response-map "allentiak")
+  (user-response-map "allentiak")
   ;; it works - the response is just too big to be shown here :)
   ,)
 
 (defn login-set-response-maps
   ([root-endpoint login-set]
-   (map #(login-response-map root-endpoint %) login-set))
+   (map #(user-response-map root-endpoint %) login-set))
   ([login-set]
    (login-set-response-maps endpoints/root-url login-set)))
 

@@ -9,7 +9,7 @@
      [:login
       [:string {:min 1}]]]]))
 
-(def login-response
+(def user-response-map
   (m/schema
    [:map
     [:login

@@ -25,18 +25,18 @@
 
 (deftest login-fetching-test
   (testing "actual GitHub REST API JSON response"
-    (let [sample-login "allentiak"]
-      (expect (m/validate schemas/login-response (fetch/login-response-map endpoints/root-url sample-login)))))
+    (let [sample-user "allentiak"]
+      (expect (m/validate schemas/user-response-map (fetch/user-response-map endpoints/root-url sample-user)))))
   (testing "manually downloaded minimized JSON files"
-    (let [mocked-login-response-body-map (json/read-str
-                                          (slurp "resources/user--minimized.json")
-                                          :key-fn keyword)]
-      (expect (m/validate schemas/login-response mocked-login-response-body-map)))))
+    (let [mocked-user-response-body-map (json/read-str
+                                         (slurp "resources/user--minimized.json")
+                                         :key-fn keyword)]
+      (expect (m/validate schemas/user-response-map mocked-user-response-body-map)))))
 
 (deftest user-repos-fetching-test
   (testing "actual GitHub REST API JSON response"
-    (let [sample-login "allentiak"]
-      (expect (m/validate schemas/repos-response (fetch/user-repos-response-map sample-login)))))
+    (let [sample-user "allentiak"]
+      (expect (m/validate schemas/repos-response (fetch/user-repos-response-map sample-user)))))
   (testing "manually downloaded minimized JSON files"
     (let [mocked-repos-response-body-map (json/read-str
                                           (slurp "resources/repos--allentiak--minimized.json")
