@@ -11,12 +11,12 @@
 
 (deftest org-members-fetching-test
   (testing "actual GitHub REST API JSON response"
-    (expect (m/validate schemas/members-response (fetch/org-members-response-map endpoints/root-url endpoints/org-name))))
+    (expect (m/validate schemas/members-response-vector (fetch/org-members-response-map endpoints/root-url endpoints/org-name))))
   (testing "manually downloaded minimized JSON files"
     (let [mocked-members-response-body-map (json/read-str
                                             (slurp "resources/members--minimized.json")
                                             :key-fn keyword)]
-      (expect (m/validate schemas/members-response mocked-members-response-body-map)))))
+      (expect (m/validate schemas/members-response-vector mocked-members-response-body-map)))))
 
 (comment
   (->
@@ -40,9 +40,9 @@
 (deftest user-repos-fetching-test
   (testing "actual GitHub REST API JSON response"
     (let [sample-user "allentiak"]
-      (expect (m/validate schemas/repos-response (fetch/user-repos-response-map sample-user)))))
+      (expect (m/validate schemas/repos-response-vector (fetch/user-repos-response-map sample-user)))))
   (testing "manually downloaded minimized JSON files"
-    (let [mocked-repos-response-body-map (json/read-str
-                                          (slurp "resources/repos--allentiak--minimized.json")
-                                          :key-fn keyword)]
-      (expect (m/validate schemas/repos-response mocked-repos-response-body-map)))))
+    (let [mocked-repos-response-vector-body (json/read-str
+                                             (slurp "resources/repos--allentiak--minimized.json")
+                                             :key-fn keyword)]
+      (expect (m/validate schemas/repos-response-vector mocked-repos-response-vector-body)))))

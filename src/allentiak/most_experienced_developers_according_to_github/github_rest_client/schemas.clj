@@ -2,7 +2,7 @@
   (:require
    [malli.core :as m]))
 
-(def members-response
+(def members-response-vector
   (m/schema
    [:vector
     [:map
@@ -17,7 +17,7 @@
     [:name
      [:string {min 1}]]]))
 
-(def repos-response
+(def repos-response-vector
   (m/schema
    [:vector
     [:map
