@@ -42,7 +42,7 @@
     (let [sample-user "allentiak"]
       (expect (m/validate schemas/repos-response-vector (fetch/user-repos-response-map sample-user)))))
   (testing "manually downloaded minimized JSON files"
-    (let [mocked-repos-response-vector-body (json/read-str
+    (let [mocked-repos-vector-response-body (json/read-str
                                              (slurp "resources/repos--allentiak--minimized.json")
                                              :key-fn keyword)]
-      (expect (m/validate schemas/repos-response-vector mocked-repos-response-vector-body)))))
+      (expect (m/validate schemas/repos-response-vector mocked-repos-vector-response-body)))))
