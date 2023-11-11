@@ -1,0 +1,30 @@
+#{{:name ".clojure",
+   :main-language nil,
+   :owner "allentiak"}
+  {:name ".spacemacs.d",
+   :main-language "Emacs Lisp",
+   :owner "allentiak"}
+  {:name "allentiak.github.io",
+   :main-language "HTML",
+   :owner "allentiak"}
+  {:name "most-experienced-developers-according-to-github",
+   :main-language "Clojure",
+   :owner "allentiak"},
+  {:owner "puredanger",
+   :name "acid.nvim",
+   :main-language nil}
+  {:owner "puredanger",
+   :name "aleph",
+   :main-language "Clojure"}
+  {:owner "puredanger",
+   :name "amsterdamjs-clojurescript-workshop",
+   :main-language nil}
+  {:owner "puredanger",
+   :name "clj-intro",
+   :main-language "Clojure"}
+  {:owner "puredanger",
+   :name "cljs-api-docs",
+   :main-language "Clojure"}
+  {:owner "puredanger",
+   :name "cljserial",
+   :main-language "Clojure"}}

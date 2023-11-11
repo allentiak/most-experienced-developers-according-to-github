@@ -3,12 +3,12 @@
    [allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching :as fetch]))
 
 (defn generate-members-login-set
-  [members-response-map]
-  (set (map :login members-response-map)))
+  [members-response-vector]
+  (set (map :login (set members-response-vector))))
 
 (comment
-  (generate-members-login-set #{{:login "user-1" :some-other-key "whatever"},
-                                {:login "user-2" :another-irrelevant-key nil}})
+  (generate-members-login-set [{:login "user-1" :some-other-key "whatever"},
+                               {:login "user-2" :another-irrelevant-key nil}])
 ;; => #{"user-1" "user-2"}
   ,)
 
@@ -24,15 +24,18 @@
   ;; => {:login "allentiak", :name "Leandro Doctors"}
   ,)
 
-(defn generate-members-map
+;; FIXME: this function fails
+(defn generate-members-set
   [login-response-maps]
-  (map generate-single-member-map login-response-maps))
+  (set (map generate-single-member-map login-response-maps)))
 
 (comment
   (fetch/login-set-responses-seq #{"allentiak" "puredanger"})
   ;; the answer here is the user seq of maps with a lot of keywords
-  (generate-members-map (fetch/login-set-responses-seq #{"allentiak", "puredanger"}))
-;; => ({:login "allentiak", :name "Leandro Doctors"} {:login "puredanger", :name "Alex Miller"})
+  (generate-members-set (fetch/login-set-responses-seq #{"allentiak", "puredanger"}))
+;; => #{{:login "puredanger", :name "Alex Miller"} {:login "allentiak", :name "Leandro Doctors"}}
+  (generate-members-set (set (fetch/login-set-responses-seq #{"allentiak", "puredanger"})))
+  ;; => #{{:login "puredanger", :name "Alex Miller"} {:login "allentiak", :name "Leandro Doctors"}}
   ,)
 
 (defn- generate-repo-per-login
@@ -54,21 +57,22 @@
     (map generate-repo-per-login user-repos-response-map)))
 
 (comment
-  (let [login "allentiak"]
-    (take 3 (generate-repos-per-login login)))
+  (take 3 (generate-repos-per-login "allentiak"))
 ;; => ({:name ".clojure", :main-language nil, :owner "allentiak"} {:name ".spacemacs.d", :main-language "Emacs Lisp", :owner "allentiak"} {:name "allentiak.github.io", :main-language "HTML", :owner "allentiak"})
+  (take 3 (generate-repos-per-login "puredanger"))
+;; => ({:owner "puredanger", :name "acid.nvim", :main-language nil} {:owner "puredanger", :name "aleph", :main-language "Clojure"} {:owner "puredanger", :name "amsterdamjs-clojurescript-workshop", :main-language nil})
   ,)
 
-(defn generate-repos-map
+(defn generate-repos-set
   [login-set]
   (set (flatten (map generate-repos-per-login login-set))))
 
 (comment
-  (take 2 (shuffle (generate-repos-map #{"allentiak", "puredanger"})))
-;; => ({:owner "puredanger", :name "clojure-1", :main-language nil} {:owner "allentiak", :name "mage", :main-language "Java"})
+  (generate-repos-set #{"allentiak", "puredanger"})
+;; => #{{:owner "puredanger", :name "clojure-1", :main-language nil} {:owner "allentiak", :name "mage", :main-language "Java"}...}
   ,)
 
-(defn generate-languages-map
+(defn generate-languages-set
   [repos-map]
   (let [languages-set (set (map :main-language repos-map))]
     (into #{} (map #(hash-map :name %) (filter some? languages-set)))))
@@ -76,6 +80,6 @@
 (comment
   (into #{} (map #(hash-map :name %) (filter some? #{"one" nil})))
 ;; => #{{:name "one"}}
-  (take 5 (generate-languages-map (generate-repos-map #{"allentiak", "puredanger"})))
-;; => ({:name "CSS"} {:name "TypeScript"} {:name "Clojure"} {:name "Java"} {:name "Shell"})
+  (generate-languages-set (generate-repos-set #{"allentiak", "puredanger"}))
+;; => #{{:name "CSS"} {:name "TypeScript"} {:name "Clojure"} {:name "Java"} {:name "Shell"}...}
   ,)

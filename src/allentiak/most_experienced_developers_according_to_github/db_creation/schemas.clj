@@ -2,7 +2,7 @@
   (:require
    [malli.core :as m]))
 
-(def members-map
+(def members-set
   (m/schema
    [:set
     [:map
@@ -11,7 +11,7 @@
      [:name
       [:string {min 1}]]]]))
 
-(def repos-map
+(def repos-set
   (m/schema
    [:set
     [:map
@@ -22,7 +22,7 @@
      [:main-language
       [:maybe [:string {min 1}]]]]]))
 
-(def languages-map
+(def languages-set
   (m/schema
    [:set
     [:map
