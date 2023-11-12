@@ -23,7 +23,6 @@
                                           :key-fn keyword))
             members-login-set (sut/generate-members-login-set mocked-members-response-set)
             generated-members-set (sut/generate-members-set members-login-set)]
-      ;; FIXME: this expect fails - it receives a set with one of its members being a map {:login nil :name nil}
         (expect (m/validate schemas/members-set generated-members-set))))))
 
 (comment
