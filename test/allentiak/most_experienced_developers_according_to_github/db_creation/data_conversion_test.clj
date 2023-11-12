@@ -30,20 +30,14 @@
   (require '[allentiak.most-experienced-developers-according-to-github.db-creation.data-conversion :as sut]
            '[clojure.data.json :as json])
   (def members-response-set (set (json/read-str
-                                  (slurp "resources/members--minimized.json")
-                                  :key-fn keyword)))
+                                   (slurp "resources/members--minimized.json")
+                                   :key-fn keyword)))
   members-response-set
-;; => #{{:login "puredanger"} {:login "allentiak"}}
+  ;; => #{{:login "puredanger"} {:login "allentiak"}}
   (def members-login-set
     (sut/generate-members-login-set members-response-set))
   members-login-set
-;; => #{"allentiak" "puredanger"}
-  (def members-set
-    (sut/generate-members-set members-login-set))
-
+  ;; => #{"allentiak" "puredanger"}
   (sut/generate-members-set members-login-set)
-
-  ;; HERE is the problem!
-  members-set
-;; => #{{:login nil, :name nil}}
- ,)
+  ;; => #{{:login "puredanger", :name "Alex Miller"} {:login "allentiak", :name "Leandro Doctors"}}
+  ,)
