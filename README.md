@@ -1,31 +1,41 @@
 # Most Experienced Developers according to GitHub
 
-FIXME: my new application.
+A data transformation pipeline project.
+
 
 ## About
 
-Code Retreat 2023 repo.
+A customer asks our consulting company for a developer with experience in a certain programming language. Write a tool so that the company can check which developer(s) already working at the company have such an experience, based on their GitHub profile information.
+
+### Task 1
+
+Create a database with data about the company members, their repos, and the corresponding programming languages they are proficient in.
+
+### Task 2
+
+Create a view with how many projects each colleague has implemented in a specific programming language.
+
+Example:
+- Employee 1
+Java 12
+Python 2
+
+### Task 3 (optional)
+
+Create a web application to search for a programming language and display the corresponding qualified developer(s), ranked.
 
 
-## Usage (verify this!)
-
-FIXME: explanation
+## Usage
 
 Run the project directly, via `:main-opts` (`-m allentiak.<main-ns>`):
 
     $ clojure -M:run-m
-    Hello, World!
 
-Run the project, overriding the name to be greeted:
-
-    $ clojure -M:run-m Via-Main
-    Hello, Via-Main!
-
-Run the project's tests (they'll fail until you edit them):
+Run the project's tests:
 
     $ clojure -T:build test
 
-Run the project's CI pipeline and build an uberjar (this will fail until you edit the tests to pass):
+Run the project's CI pipeline and build an uberjar:
 
     $ clojure -T:build ci
 
@@ -41,33 +51,13 @@ Run that uberjar:
 
     $ java -jar target/net.clojars.allentiak/<main-ns>-0.1.0-SNAPSHOT.jar
 
-## Usage
 
-Tests can be run from the terminal with:
+## Hacking
 
-    % clojure -X:test:test/run
-
-(Without the first 'test', 'expectations' can not be found.)
-
-REPL can be run from the terminal with:
+Assuming you have a REPL alias in your Clojure configuration, you can run it from the terminal with something like this:
 
     % clojure -M:test:repl/rebel-debug-refactor
 
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
 
 ## License
 
