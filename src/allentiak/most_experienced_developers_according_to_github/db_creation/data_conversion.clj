@@ -4,7 +4,7 @@
 
 (defn generate-members-login-set
   [members-response-vector]
-  (set (map :login (set members-response-vector))))
+  (into #{} (map :login (set members-response-vector))))
 
 (comment
   (generate-members-login-set [{:login "user-1" :some-other-key "whatever"},
@@ -67,7 +67,7 @@
 
 (defn generate-repos-set
   [login-set]
-  (set (flatten (map generate-repos-per-login login-set))))
+  (into #{} (flatten (map generate-repos-per-login login-set))))
 
 (comment
   (generate-repos-set #{"allentiak", "puredanger"})
