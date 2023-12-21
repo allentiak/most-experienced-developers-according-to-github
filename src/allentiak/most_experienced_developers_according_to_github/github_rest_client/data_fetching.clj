@@ -1,8 +1,9 @@
 (ns allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching
   (:require
-   [allentiak.most-experienced-developers-according-to-github.github-rest-client.endpoints :as endpoints]
-   [clj-http.client :as http]
-   [clojure.data.json :as json]))
+    [allentiak.most-experienced-developers-according-to-github.github-rest-client.endpoints :as endpoints]
+    [clj-http.client :as http]
+    [clojure.data.json :as json]))
+
 
 (defn org-members-response-vector
   ([root-endpoint-url org-name]
@@ -14,10 +15,12 @@
   ([org-name]
    (org-members-response-vector endpoints/root-url org-name)))
 
+
 (comment
   (org-members-response-vector "codecentric")
   ;; it works - the response is just too big to be shown here :)
   ,)
+
 
 (defn user-response-map
   ([root-endpoint-url login]
@@ -29,10 +32,12 @@
   ([login]
    (user-response-map endpoints/root-url login)))
 
+
 (comment
   (user-response-map "allentiak")
   ;; it works - the response is just too big to be shown here :)
   ,)
+
 
 (defn login-set-responses-seq
   ([root-endpoint login-set]
@@ -40,10 +45,12 @@
   ([login-set]
    (login-set-responses-seq endpoints/root-url login-set)))
 
+
 (comment
   (login-set-responses-seq #{"allentiak" "puredanger"})
   ;; it works - the response is just too big to be shown here :)
   ,)
+
 
 (defn user-repos-response-vector
   ([root-endpoint-url login]
@@ -54,6 +61,7 @@
      repos-per-login-response-vector))
   ([login]
    (user-repos-response-vector endpoints/root-url login)))
+
 
 (comment
   (user-repos-response-vector "allentiak")
