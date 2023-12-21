@@ -1,6 +1,9 @@
 (ns allentiak.most-experienced-developers-according-to-github.github-rest-client.schemas
   (:require
-    [malli.core :as m]))
+    [allentiak.most-experienced-developers-according-to-github.db-creation.schemas :as db-schemas]
+    [malli.core :as m]
+    [malli.util :as mu]))
+
 
 (def members-response-vector
   (m/schema
@@ -11,12 +14,9 @@
 
 
 (def user-response-map
-  (m/schema
-   [:map
-    [:login
-     [:string {min 1}]]
-    [:name
-     [:string {min 1}]]]))
+  (mu/open-schema
+    db-schemas/member-map))
+
 
 (def repos-response-vector
   (m/schema

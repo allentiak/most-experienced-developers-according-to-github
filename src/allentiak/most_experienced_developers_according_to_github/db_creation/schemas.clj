@@ -2,19 +2,28 @@
   (:require
     [malli.core :as m]))
 
-(def members-set
+
+(def member-map
   (m/schema
-   [:set
     [:map
+     {:closed true}
      [:login
       [:string {min 1}]]
      [:name
-      [:string {min 1}]]]]))
+      [:string {min 1}]]]))
+
+
+(def members-set
+  (m/schema
+    [:set
+     member-map]))
+
 
 (def repos-set
   (m/schema
     [:set
      [:map
+      {:closed true}
       [:owner
        [:string {min 1}]]
       [:name
@@ -27,6 +36,7 @@
   (m/schema
     [:set
      [:map
+      {:closed true}
       [:id
        [:int]]
       [:name
