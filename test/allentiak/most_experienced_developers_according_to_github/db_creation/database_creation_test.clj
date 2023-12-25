@@ -5,28 +5,51 @@
     [expectations.clojure.test :refer [expect]]
     [next.jdbc :as jdbc]))
 
-(defn create-db-conn [])
-(defn load-test-data [conn])
-(defn add-user [conn user])
-(defn check-user [conn user])
-(defn destroy-test-data [conn])
-(defn close-db-conn [conn])
+
+(defn create-db-conn
+  [])
+
+
+(defn load-test-data
+  [conn])
+
+
+(defn add-user
+  [conn user])
+
+
+(defn check-user
+  [conn user])
+
+
+(defn destroy-test-data
+  [conn])
+
+
+(defn close-db-conn
+  [conn])
+
 
 (def ^:dynamic *conn*)
 
-(defn with-test-db [test-fn]
+
+(defn with-test-db
+  [test-fn]
   (binding [*conn* (create-db-conn)]
     (load-test-data *conn*)
     (test-fn)
     (destroy-test-data *conn*)
     (close-db-conn *conn*)))
 
+
 (use-fixtures :each with-test-db)
+
 
 (deftest add-user-to-database-test
   (testing "adding user to the database"
     (expect (= (add-user *conn* "user") "whatever"))
     (expect (= (check-user *conn* "user") "whatever"))))
+
 
 (comment
   (require '[next.jdbc :as jdbc])
