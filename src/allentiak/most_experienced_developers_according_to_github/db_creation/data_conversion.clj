@@ -17,16 +17,16 @@
 
 (defn- generate-single-member-map
   [login]
-  (let [user-response-map (fetch/user-response-map login)]
+  (let [user-response-map (fetch/user-data-by-login login)]
     {:login (:login user-response-map)
      :name (:name user-response-map)}))
 
 
 (comment
   (require '[allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching :as fetch])
-  (fetch/user-response-map "allentiak")
+  (fetch/user-data-by-login "allentiak")
   ;; the answer here is the user with a lot of keywords
-  (generate-single-member-map (fetch/user-response-map "allentiak"))
+  (generate-single-member-map (fetch/user-data-by-login "allentiak"))
   ;; => {:login "allentiak", :name "Leandro Doctors"}
   ,)
 
@@ -38,11 +38,11 @@
 
 (comment
   (require '[allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching :as fetch])
-  (fetch/login-set-responses-seq #{"allentiak" "puredanger"})
+  (fetch/users-data #{"allentiak" "puredanger"})
   ;; the answer here is the user seq of maps with a lot of keywords
-  (generate-members-set (fetch/login-set-responses-seq #{"allentiak", "puredanger"}))
+  (generate-members-set (fetch/users-data #{"allentiak", "puredanger"}))
   ;; => #{{:login "puredanger", :name "Alex Miller"} {:login "allentiak", :name "Leandro Doctors"}}
-  (generate-members-set (set (fetch/login-set-responses-seq #{"allentiak", "puredanger"})))
+  (generate-members-set (set (fetch/users-data #{"allentiak", "puredanger"})))
   ;; => #{{:login "puredanger", :name "Alex Miller"} {:login "allentiak", :name "Leandro Doctors"}}
   ,)
 
@@ -64,7 +64,7 @@
 
 (defn- generate-repos-per-login
   [login]
-  (let [user-repos-response-map (fetch/user-repos-response-vector login)]
+  (let [user-repos-response-map (fetch/repos-by-login login)]
     (map generate-repo-per-login user-repos-response-map)))
 
 

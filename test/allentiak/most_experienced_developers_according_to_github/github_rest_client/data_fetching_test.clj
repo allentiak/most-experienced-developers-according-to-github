@@ -12,7 +12,7 @@
 
 (deftest org-members-fetching-test
   (testing "actual GitHub REST API JSON response"
-    (expect (m/validate schemas/members-response-vector (fetch/org-members-response-vector endpoints/root-url endpoints/org-name))))
+    (expect (m/validate schemas/members-response-vector (fetch/org-members endpoints/root-url endpoints/org-name))))
   (testing "manually downloaded minimized JSON files"
     (let [mocked-members-response-body-map (json/read-str
                                              (slurp "resources/members--minimized.json")
@@ -29,7 +29,7 @@
 (deftest login-fetching-test
   (testing "actual GitHub REST API JSON response"
     (let [sample-user "allentiak"]
-      (expect (m/validate schemas/user-response-map (fetch/user-response-map endpoints/root-url sample-user)))))
+      (expect (m/validate schemas/user-response-map (fetch/user-data-by-login endpoints/root-url sample-user)))))
   (testing "manually downloaded minimized JSON files"
     (let [mocked-allentiak-user-response-body-map (json/read-str
                                                     (slurp "resources/user--allentiak--minimized.json")
@@ -44,7 +44,7 @@
 (deftest user-repos-fetching-test
   (testing "actual GitHub REST API JSON response"
     (let [sample-user "allentiak"]
-      (expect (m/validate schemas/repos-response-vector (fetch/user-repos-response-vector sample-user)))))
+      (expect (m/validate schemas/repos-response-vector (fetch/repos-by-login sample-user)))))
   (testing "manually downloaded minimized JSON files"
     (let [mocked-repos-vector-response-body (json/read-str
                                               (slurp "resources/repos--allentiak--minimized.json")
