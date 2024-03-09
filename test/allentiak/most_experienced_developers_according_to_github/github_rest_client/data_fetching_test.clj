@@ -41,6 +41,29 @@
       (expect (m/validate schemas/user-response-map mocked-puredanger-user-response-body-map)))))
 
 
+(deftest users-data-fetching-test
+  (testing "get data from a set of users"
+    (testing "actual GitHub REST API JSON response"
+      (let [users #{"allentiak" "puredanger"}]
+        (expect (m/validate schemas/user-response-maps-seq (fetch/users-data endpoints/root-url users)))))
+    (testing "manually downloaded minimized JSON files"
+      (let [mocked-user-response-maps-set (read-string (slurp "resources/users-data--minimized.edn"))]
+        (expect (m/validate schemas/user-response-maps-seq mocked-user-response-maps-set))))))
+
+
+(comment
+  (def my-users #{"allentiak" "puredanger"})
+  (defn mocked-response []
+    (read-string (slurp "resources/users-data--minimized.edn")))
+  (read-string (slurp "resources/users-data--minimized.edn"))
+  (fetch/users-data endpoints/root-url my-users)
+  (first (mocked-response))
+  (m/validate schemas/user-response-map (first (mocked-response)))
+  ;; => true
+  (m/validate schemas/user-response-maps-seq (mocked-response))
+  ,)
+
+
 (deftest user-repos-fetching-test
   (testing "actual GitHub REST API JSON response"
     (let [sample-user "allentiak"]

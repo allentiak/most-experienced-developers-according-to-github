@@ -18,6 +18,12 @@
     db-schemas/member-map))
 
 
+(def user-response-maps-seq
+  (m/schema
+    [:sequential
+     user-response-map]))
+
+
 (def repos-response-vector
   (m/schema
     [:vector
