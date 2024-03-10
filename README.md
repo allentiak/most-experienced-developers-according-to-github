@@ -54,9 +54,13 @@ Run that uberjar:
 
 ## Hacking
 
-Assuming you have a REPL alias in your Clojure configuration, you can run it from the terminal with something like this:
+Start a REPL from the terminal:
 
-    % clojure -M:test:repl/rebel-debug-refactor
+    % clojure -M:repl
+
+Run tests on save:
+
+    % clojure -X:watch-test
 
 
 ## License
