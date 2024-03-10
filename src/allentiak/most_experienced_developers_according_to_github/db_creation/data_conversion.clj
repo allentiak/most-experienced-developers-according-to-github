@@ -23,10 +23,12 @@
 
 
 (comment
-  (require '[allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching :as fetch])
-  (fetch/user-data-by-login "allentiak")
-  ;; the answer here is the user with a lot of keywords
-  (generate-single-member-map (fetch/user-data-by-login "allentiak"))
+  (require '[clojure.data.json :as json])
+  (def mocked-member-data (json/read-str
+                            (slurp "resources/user--allentiak--minimized.json")
+                            :key-fn keyword))
+
+  (generate-single-member-map "allentiak")
   ;; => {:login "allentiak", :name "Leandro Doctors"}
   ,)
 
@@ -37,12 +39,13 @@
 
 
 (comment
-  (require '[allentiak.most-experienced-developers-according-to-github.github-rest-client.data-fetching :as fetch])
-  (fetch/users-data #{"allentiak" "puredanger"})
-  ;; the answer here is the user seq of maps with a lot of keywords
-  (generate-members-set (fetch/users-data #{"allentiak", "puredanger"}))
+  (require '[clojure.edn :as edn])
+  (defn mocked-users-data [] (edn/read-string
+                               (slurp "resources/users-data--minimized.edn")))
+  (mocked-users-data)
+  (generate-members-set #{"allentiak" "puredanger"})
   ;; => #{{:login "puredanger", :name "Alex Miller"} {:login "allentiak", :name "Leandro Doctors"}}
-  (generate-members-set (set (fetch/users-data #{"allentiak", "puredanger"})))
+  (generate-members-set (set (mocked-users-data)))
   ;; => #{{:login "puredanger", :name "Alex Miller"} {:login "allentiak", :name "Leandro Doctors"}}
   ,)
 
