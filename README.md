@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later WITH GPL-3.0-linking-source-exception
+
 # Most Experienced Developers according to GitHub
 
 A data transformation pipeline project.
