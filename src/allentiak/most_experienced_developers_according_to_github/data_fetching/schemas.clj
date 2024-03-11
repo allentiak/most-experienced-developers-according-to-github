@@ -20,7 +20,7 @@
       [:string {min 1}]]]))
 
 
-(def user-logins-seq
+(def user-login-responses-seq
   (m/schema
     [:sequential
      user-login-response]))

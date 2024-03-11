@@ -3,7 +3,7 @@
    [allentiak.most-experienced-developers-according-to-github.data-fetching :as sut]
    [allentiak.most-experienced-developers-according-to-github.data-fetching.endpoints :as endpoints]
    [allentiak.most-experienced-developers-according-to-github.data-fetching.schemas :as schemas]
-   [clojure.data.json :as json]
+   [clojure.edn :as edn]
    [clojure.test :refer [use-fixtures]]
    [expectations.clojure.test :refer [defexpect expect expecting]]
    [malli.core :as m]))
@@ -23,10 +23,9 @@
     (expecting "actual GitHub REST API JSON response"
       (expect (m/validate schemas/members-response (sut/org-members org-name))))
     (expecting "manually downloaded minimized JSON files"
-      (let [mocked-members-response-body-map (json/read-str
-                                              (slurp (str test-resources-root-dir "members--minimized.json"))
-                                              :key-fn keyword)]
-        (expect (m/validate schemas/members-response mocked-members-response-body-map))))))
+      (let [mocked-members-response (edn/read-string
+                                      (slurp (str test-resources-root-dir "members-response--full.edn")))]
+        (expect (m/validate schemas/members-response mocked-members-response))))))
 
 (comment
   (let [test-resources-root-dir "resources/test/data_fetching/"]
@@ -38,26 +37,12 @@
    (http/get (endpoints/get-members-url {:accept :json}))
    :body))
 
-(defexpect login-fetching-should
-  (expecting "get data from a user"
-    (expecting "actual GitHub REST API JSON response"
-      (let [sample-user "allentiak"]
-        (expect (m/validate schemas/user-login-response (sut/user-data-by-login sample-user)))))
-    (expecting "manually downloaded minimized JSON files"
-      (let [mocked-allentiak-user-response-body-map (json/read-str
-                                                     (slurp (str test-resources-root-dir "user--allentiak--minimized.json"))
-                                                     :key-fn keyword)
-            mocked-puredanger-user-response-body-map (json/read-str
-                                                      (slurp (str test-resources-root-dir "user--puredanger--minimized.json"))
-                                                      :key-fn keyword)]
-        (expect (m/validate schemas/user-login-response mocked-allentiak-user-response-body-map))
-        (expect (m/validate schemas/user-login-response mocked-puredanger-user-response-body-map))))))
 
 (defexpect users-data-fetching-should
   (expecting "get data from a set of users"
     (expecting "actual GitHub REST API JSON response"
       (let [users #{"allentiak" "puredanger"}]
-        (expect (m/validate schemas/user-logins-seq (sut/users-data users)))))
+        (expect (m/validate schemas/user-login-responses-seq (sut/users-data users)))))
     (expecting "manually downloaded minimized JSON files"
-      (let [mocked-user-response-maps-set (read-string (slurp (str test-resources-root-dir "users-data--minimized.edn")))]
-        (expect (m/validate schemas/user-logins-seq mocked-user-response-maps-set))))))
+      (let [mocked-user-login-responses-seq (edn/read-string (slurp (str test-resources-root-dir "users-data-response--full.edn")))]
+        (expect (m/validate schemas/user-login-responses-seq mocked-user-login-responses-seq))))))

@@ -34,9 +34,9 @@
 
 
 (defn users-data
-  [login-set]
-  (let [user-logins-seq (map user-data-by-login login-set)]
-    user-logins-seq))
+  [user-logins-set]
+  (let [user-login-responses-seq (map user-data-by-login user-logins-set)]
+    user-login-responses-seq))
 
 
 (comment
