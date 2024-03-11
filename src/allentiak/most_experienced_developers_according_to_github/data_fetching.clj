@@ -7,11 +7,11 @@
 
 (defn org-members
   [org-name]
-  (let [members-endpoint-url (endpoints/get-members-url org-name)
-        members-response-body (:body (http/get members-endpoint-url))
-        members-response-vector (json/read-str members-response-body
-                                               :key-fn keyword)]
-    members-response-vector))
+  (let [endpoint-url (endpoints/get-members-url org-name)
+        response-body (:body (http/get endpoint-url))
+        members-response (json/read-str response-body
+                                        :key-fn keyword)]
+    members-response))
 
 (comment
   (org-members "codecentric")
@@ -19,13 +19,13 @@
   ,)
 
 
-(defn user-data-by-login
+(defn- user-data-by-login
   [login]
-  (let [user-endpoint-url (endpoints/get-user-login-url login)
-        login-response-body (:body (http/get user-endpoint-url))
-        login-response-map (json/read-str login-response-body
-                                          :key-fn keyword)]
-    login-response-map))
+  (let [endpoint-url (endpoints/get-user-login-url login)
+        response-body (:body (http/get endpoint-url))
+        user-login-response (json/read-str response-body
+                                           :key-fn keyword)]
+    user-login-response))
 
 (comment
   (user-data-by-login "allentiak")
@@ -35,7 +35,8 @@
 
 (defn users-data
   [login-set]
-  (map user-data-by-login login-set))
+  (let [user-logins-seq (map user-data-by-login login-set)]
+    user-logins-seq))
 
 
 (comment
