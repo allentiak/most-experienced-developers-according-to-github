@@ -15,9 +15,10 @@
   (m/schema
     [:map
      [:login
-      [:string {min 1}]]
+      [:string {:min 1}]]
      [:name
-      [:string {min 1}]]]))
+      [:maybe
+       [:string {:min 1}]]]]))
 
 
 (def user-login-responses-seq

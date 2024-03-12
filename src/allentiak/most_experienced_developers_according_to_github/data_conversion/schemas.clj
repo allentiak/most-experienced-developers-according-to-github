@@ -6,7 +6,7 @@
 (def user-logins-set
   (m/schema
     [:set
-     [:string {min 1}]]))
+     [:string {:min 1}]]))
 
 
 (def members-table-row
@@ -14,9 +14,10 @@
     [:map
      {:closed true}
      [:login
-      [:string {min 1}]]
+      [:string {:min 1}]]
      [:name
-      [:string {min 1}]]]))
+      [:maybe
+       [:string {:min 1}]]]]))
 
 (def members-table-data
   (m/schema
@@ -35,11 +36,11 @@
     [:map
      {:closed true}
      [:owner
-      [:string {min 1}]]
+      [:string {:min 1}]]
      [:name
-      [:string {min 1}]]
+      [:string {:min 1}]]
      [:main-language
-      [:maybe [:string {min 1}]]]]))
+      [:maybe [:string {:min 1}]]]]))
 
 
 (def repos-set
@@ -55,7 +56,7 @@
      [:id
       [:int]]
      [:name
-      [:string {min 1}]]]))
+      [:string {:min 1}]]]))
 
 
 (def languages-set
