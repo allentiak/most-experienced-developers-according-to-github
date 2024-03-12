@@ -27,3 +27,4 @@
 /classes
 /target
 /.clj-kondo/
+*.db
