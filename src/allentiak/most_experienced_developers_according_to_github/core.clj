@@ -7,10 +7,10 @@
 (defn generate-members-table
   [org-name]
   (->
-    (fetch/org-members org-name)
-    (convert/members-response->user-logins-set)
-    (fetch/users-data)
-    (convert/user-login-responses-set->member-table-data-set)))
+   (fetch/org-members org-name)
+   (convert/members-response->user-logins-set)
+   (fetch/users-data)
+   (convert/user-login-responses-set->member-table-data-set)))
 
 (defn -main
   "I don't do a whole lot ... yet."

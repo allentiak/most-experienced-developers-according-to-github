@@ -4,14 +4,14 @@
 
 (def members-table-row
   (m/schema
-    [:map
-     [:login
-      [:string {:min 1}]]
-     [:name
-      [:maybe
-       [:string {:min 1}]]]]))
+   [:map
+    [:login
+     [:string {:min 1}]]
+    [:name
+     [:maybe
+      [:string {:min 1}]]]]))
 
 (def members-table
   (m/schema
-    [:vector
-     members-table-row]))
+   [:vector
+    members-table-row]))
