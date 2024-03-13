@@ -20,8 +20,8 @@
 
 (defexpect org-members-fetching-should
   (expecting "get members list"
-    (expecting "actual GitHub REST API JSON response"
-      (expect (m/validate schemas/members-response (sut/org-members org-name))))
+    #_(expecting "actual GitHub REST API JSON response"
+        (expect (m/validate schemas/members-response (sut/org-members org-name))))
     (expecting "manually downloaded minimized JSON files"
       (let [mocked-members-response (edn/read-string
                                       (slurp (str test-resources-root-dir "members-response--full.edn")))]
@@ -40,9 +40,9 @@
 
 (defexpect users-data-fetching-should
   (expecting "get data from a set of users"
-    (expecting "actual GitHub REST API JSON response"
-      (let [users #{"allentiak" "puredanger"}]
-        (expect (m/validate schemas/user-login-responses-seq (sut/users-data users)))))
+    #_(expecting "actual GitHub REST API JSON response"
+        (let [users #{"allentiak" "puredanger"}]
+          (expect (m/validate schemas/user-login-responses-seq (sut/users-data users)))))
     (expecting "manually downloaded minimized JSON files"
       (let [mocked-user-login-responses-seq (edn/read-string (slurp (str test-resources-root-dir "users-data-response--full.edn")))]
         (expect (m/validate schemas/user-login-responses-seq mocked-user-login-responses-seq))))))
