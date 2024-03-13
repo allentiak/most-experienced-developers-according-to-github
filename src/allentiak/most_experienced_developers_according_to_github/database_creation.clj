@@ -3,31 +3,13 @@
    [next.jdbc :as jdbc]
    [next.jdbc.sql :as sql]))
 
-
 (def db
   {:dbtype "h2"
-   :dbname "local-db"})
+   :dbname "local-db"
+   :database_to_upper false})
 
 (def ds
   (jdbc/get-datasource db))
-
-(def members
-  "members (
-  login varchar(32) primary key,
-  name varchar(32)
-  )")
-
-(def create-table-members
-  (str "create table" " " members))
-
-(def create-table-members-if-not-exists
-  (str "create table if not exists" " " members))
-
-(def drop-table-members
-  "drop table members")
-
-(def drop-table-members-if-exists
-  "drop table if exists members")
 
 (comment
   (def my-data
