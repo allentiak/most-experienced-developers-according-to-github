@@ -44,13 +44,13 @@
 
 (comment
   (commands/create-db-tables! ds)
-;; => [#:next.jdbc{:update-count 0}]
+  ;; => [#:next.jdbc{:update-count 0}]
   (commands/load-data! ds dummy-data)
-;; => [#:members{:login "abc"} #:members{:login "login"}]
+  ;; => [#:members{:login "abc"} #:members{:login "login"}]
   (commands/destroy-data! ds)
-;; => [#:next.jdbc{:update-count 2}]
+  ;; => [#:next.jdbc{:update-count 2}]
   (commands/drop-all-tables! ds)
-;; => [#:next.jdbc{:update-count 0}]
+  ;; => [#:next.jdbc{:update-count 0}]
   ()
   ,)
 

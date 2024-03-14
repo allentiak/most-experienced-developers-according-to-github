@@ -26,6 +26,11 @@
                      :members
                      (vec data)))
 
+(defn destroy-data!
+  [connectable]
+  (jdbc/execute! connectable
+                 ["delete from members"]))
+
 (defn drop-all-tables!
   [connectable]
   (jdbc/execute! connectable
