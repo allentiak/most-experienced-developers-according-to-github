@@ -64,10 +64,10 @@
   ,)
 
 (defexpect database-creation-should
-  (expecting "persist data"
+  (expecting "correctly persist data"
              (expect (= (queries/get-members-by-login ds "abc")
                         [#:members{:login "abc" :name nil}]))
              (expect (= (queries/get-members-by-login ds "login")
                         [#:members{:login "login" :name "name"}])))
-  (expecting "persistence schemas"
+  (expecting "respect persistence schema"
              (expect (m/validate schemas/members-table (queries/get-all-members ds)))))
