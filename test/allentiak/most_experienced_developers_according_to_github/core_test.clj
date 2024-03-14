@@ -20,7 +20,8 @@
 (defexpect generate-members-table-should
   (expecting "generate members table from org-name"
              (let [generated-members-table-data-set (sut/generate-members-table org-name)]
-               (expect (m/validate schemas/members-table-data generated-members-table-data-set)))))
+               (expect (m/validate schemas/members-table-data generated-members-table-data-set))))
+  (expecting "persist generated data"))
 
 (comment
   (m/validate schemas/members-table-data #{{:name "asv" :login "ass"}

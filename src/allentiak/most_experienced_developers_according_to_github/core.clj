@@ -2,7 +2,8 @@
   (:gen-class)
   (:require
    [allentiak.most-experienced-developers-according-to-github.data-fetching :as fetch]
-   [allentiak.most-experienced-developers-according-to-github.data-conversion :as convert]))
+   [allentiak.most-experienced-developers-according-to-github.data-conversion :as convert]
+   [allentiak.most-experienced-developers-according-to-github.database-creation :as persist]))
 
 (defn generate-members-table
   [org-name]
@@ -11,6 +12,7 @@
    (convert/members-response->user-logins-set)
    (fetch/users-data)
    (convert/user-login-responses-set->members-table-data-set)
+   (persist/persist-members-table! ds)))
 
 (defn -main
   "I don't do a whole lot ... yet."
