@@ -6,12 +6,14 @@
     :as commands]
    [allentiak.most-experienced-developers-according-to-github.database-creation.schemas :as schemas]
    [clojure.test :refer [use-fixtures]]
+   [expectations.clojure.test :refer [defexpect expect expecting]]
    [malli.core :as m]
-   [next.jdbc :as jdbc]))
+   [next.jdbc :as jdbc]
+   [allentiak.most-experienced-developers-according-to-github.database-creation.queries :as queries]))
 
 (defn with-files-path
   [test-fn]
-  (def test-resources-root-dir "resources/test/data_conversion/")
+  (def test-resources-root-dir "resources/test/database_creation/")
   (test-fn)
   (ns-unmap *ns* 'test-resources-root-dir))
 
@@ -47,13 +49,25 @@
   ;; => [#:next.jdbc{:update-count 0}]
   (commands/load-data! ds dummy-data)
   ;; => [#:members{:login "abc"} #:members{:login "login"}]
+  (jdbc/execute! ds
+                 ["select * from members"])
+  ;; => [#:members{:login "abc", :name nil} #:members{:login "login", :name "name"}]
+  (jdbc/execute! ds
+                 ["select * from members where login = 'abc'"])
+  ;; => [#:members{:login "abc", :name nil}]
+  (queries/get-members-by-login ds "abc")
+  ;; => [#:members{:login "abc", :name nil}]
   (commands/destroy-data! ds)
   ;; => [#:next.jdbc{:update-count 2}]
   (commands/drop-all-tables! ds)
   ;; => [#:next.jdbc{:update-count 0}]
-  ()
   ,)
 
-(defexpect persist-should
+(defexpect database-creation-should
   (expecting "persist data"
-             (expect (m/validate))))
+             (expect (= (queries/get-members-by-login ds "abc")
+                        [#:members{:login "abc" :name nil}]))
+             (expect (= (queries/get-members-by-login ds "login")
+                        [#:members{:login "login" :name "name"}])))
+  (expecting "persistence schemas"
+             (expect (m/validate schemas/members-table (queries/get-all-members ds)))))
