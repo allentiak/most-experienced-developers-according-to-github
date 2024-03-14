@@ -16,17 +16,17 @@
   "drop table members")
 
 (defn create-db-tables
-  [ds]
-  (jdbc/execute! ds
+  [connectable]
+  (jdbc/execute! connectable
                  [create-table-members]))
 
 (defn load-data
-  [ds data]
-  (sql/insert-multi! ds
+  [connectable data]
+  (sql/insert-multi! connectable
                      :members
                      (vec data)))
 
 (defn drop-all-tables
-  [ds]
-  (jdbc/execute! ds
+  [connectable]
+  (jdbc/execute! connectable
                  [drop-table-members]))
