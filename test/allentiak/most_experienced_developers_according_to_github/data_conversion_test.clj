@@ -30,7 +30,7 @@
                                                     (slurp (str test-resources-root-dir "users-data-response--full.edn")))
                    mocked-member-table-data-set (edn/read-string
                                                  (slurp (str test-resources-root-dir "members-table-data-set.edn")))
-                   actual-member-table-data-set (sut/user-login-responses-set->member-table-data-set mocked-user-login-responses-seq)]
+                   actual-member-table-data-set (sut/user-login-responses-set->members-table-data-set mocked-user-login-responses-seq)]
                (expect (m/validate schemas/members-table-data actual-member-table-data-set))
-               (expect (= (sut/user-login-responses-set->member-table-data-set mocked-user-login-responses-seq)
+               (expect (= (sut/user-login-responses-set->members-table-data-set mocked-user-login-responses-seq)
                           mocked-member-table-data-set)))))

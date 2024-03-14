@@ -10,7 +10,7 @@
    (fetch/org-members org-name)
    (convert/members-response->user-logins-set)
    (fetch/users-data)
-   (convert/user-login-responses-set->member-table-data-set)))
+   (convert/user-login-responses-set->members-table-data-set)
 
 (defn -main
   "I don't do a whole lot ... yet."
