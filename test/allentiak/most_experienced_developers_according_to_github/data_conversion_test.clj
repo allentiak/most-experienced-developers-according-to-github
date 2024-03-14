@@ -24,13 +24,13 @@
                                           (slurp (str test-resources-root-dir "members-login-set--full.edn")))]
                (expect (m/validate schemas/user-logins-set (sut/members-response->user-logins-set mocked-members-response)))
                (expect (= (sut/members-response->user-logins-set mocked-members-response)
-                          mocked-user-login-set)))
-             (expecting "convert user-login-responses-seq -> member-table-data-set"
-                        (let [mocked-user-login-responses-seq (edn/read-string
-                                                               (slurp (str test-resources-root-dir "users-data-response--full.edn")))
-                              mocked-member-table-data-set (edn/read-string
-                                                            (slurp (str test-resources-root-dir "members-table-data-set.edn")))
-                              actual-member-table-data-set (sut/user-login-responses-set->member-table-data-set mocked-user-login-responses-seq)]
-                          (expect (m/validate schemas/members-table-data actual-member-table-data-set))
-                          (expect (= (sut/user-login-responses-set->member-table-data-set mocked-user-login-responses-seq)
-                                     mocked-member-table-data-set))))))
+                          mocked-user-login-set))))
+  (expecting "convert user-login-responses-seq -> member-table-data-set"
+             (let [mocked-user-login-responses-seq (edn/read-string
+                                                    (slurp (str test-resources-root-dir "users-data-response--full.edn")))
+                   mocked-member-table-data-set (edn/read-string
+                                                 (slurp (str test-resources-root-dir "members-table-data-set.edn")))
+                   actual-member-table-data-set (sut/user-login-responses-set->member-table-data-set mocked-user-login-responses-seq)]
+               (expect (m/validate schemas/members-table-data actual-member-table-data-set))
+               (expect (= (sut/user-login-responses-set->member-table-data-set mocked-user-login-responses-seq)
+                          mocked-member-table-data-set)))))
