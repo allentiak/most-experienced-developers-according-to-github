@@ -4,7 +4,7 @@
     :as sut]
    [allentiak.most-experienced-developers-according-to-github.database-creation.commands
     :as commands]
-   [allentiak.most-experienced-developers-according-to-github.data-conversion.schemas :as schemas]
+   [allentiak.most-experienced-developers-according-to-github.database-creation.schemas :as schemas]
    [clojure.test :refer [use-fixtures]]
    [malli.core :as m]
    [next.jdbc :as jdbc]))
