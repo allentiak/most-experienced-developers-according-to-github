@@ -31,15 +31,28 @@
   "A test fixture that sets up an in-memory H2 database for running tests."
   [test-fn]
   (try
-    (commands/create-db-tables ds)
-    (commands/load-data ds dummy-data)
+    (commands/create-db-tables! ds)
+    (commands/load-data! ds dummy-data)
     (catch Exception _))
   (test-fn)
-  (commands/drop-all-tables ds))
+  (commands/destroy-data! ds)
+  (commands/drop-all-tables! ds))
 
 (use-fixtures
   :once with-files-path
   :each with-test-db)
+
+(comment
+  (commands/create-db-tables! ds)
+;; => [#:next.jdbc{:update-count 0}]
+  (commands/load-data! ds dummy-data)
+;; => [#:members{:login "abc"} #:members{:login "login"}]
+  (commands/destroy-data! ds)
+;; => [#:next.jdbc{:update-count 2}]
+  (commands/drop-all-tables! ds)
+;; => [#:next.jdbc{:update-count 0}]
+  ()
+  ,)
 
 (defexpect persist-should
   (expecting "persist data"

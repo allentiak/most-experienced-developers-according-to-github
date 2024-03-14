@@ -15,18 +15,18 @@
 (def ^:private drop-table-members
   "drop table members")
 
-(defn create-db-tables
+(defn create-db-tables!
   [connectable]
   (jdbc/execute! connectable
                  [create-table-members]))
 
-(defn load-data
+(defn load-data!
   [connectable data]
   (sql/insert-multi! connectable
                      :members
                      (vec data)))
 
-(defn drop-all-tables
+(defn drop-all-tables!
   [connectable]
   (jdbc/execute! connectable
                  [drop-table-members]))
