@@ -61,7 +61,7 @@
   ;; => [#:next.jdbc{:update-count 2}]
   (commands/drop-all-tables! ds)
   ;; => [#:next.jdbc{:update-count 0}]
-  ,)
+  )
 
 (defexpect database-creation-should
   (expecting "correctly persist data"
