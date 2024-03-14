@@ -9,17 +9,11 @@
   name varchar(32)
   )")
 
-(def create-table-members
+(def ^:private create-table-members
   (str "create table" " " members))
 
-(def create-table-members-if-not-exists
-  (str "create table if not exists" " " members))
-
-(def drop-table-members
+(def ^:private drop-table-members
   "drop table members")
-
-(def drop-table-members-if-exists
-  "drop table if exists members")
 
 (defn create-db-tables
   [ds]
