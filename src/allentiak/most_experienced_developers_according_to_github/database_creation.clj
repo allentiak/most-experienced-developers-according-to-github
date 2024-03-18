@@ -9,8 +9,3 @@
 
 (def ds
   (jdbc/get-datasource db))
-
-(defn persist-members-table!
-  "take data and store it into the database"
-  [conectable data]
-  (whaetever))
