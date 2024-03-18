@@ -18,10 +18,13 @@
 (use-fixtures :once with-defs)
 
 (defexpect generate-members-table-should
-  (expecting "generate members table from org-name"
-             (let [generated-members-table-data-set (sut/generate-members-table org-name)]
-               (expect (m/validate schemas/members-table-data generated-members-table-data-set))))
-  (expecting "persist generated data"))
+  (let [generated-members-table-data-set (sut/generate-members-table org-name)
+        _ (sut/persist-members-table! generated-members-table-data-set)]
+    (expecting "generate members table from org-name"
+          (expect (m/validate schemas/members-table-data generated-members-table-data-set)))
+    ;; How should I correctly test this?
+    #_(expecting "persist generated data"
+                 (expect ()))))
 
 (comment
   (m/validate schemas/members-table-data #{{:name "asv" :login "ass"}
