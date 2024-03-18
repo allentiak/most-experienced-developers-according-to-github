@@ -35,3 +35,7 @@
   [connectable]
   (jdbc/execute! connectable
                  [drop-table-members]))
+
+(defn insert-member!
+  [connectable member]
+  (sql/insert! (connectable) :members member))

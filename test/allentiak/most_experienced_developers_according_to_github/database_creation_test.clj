@@ -57,18 +57,25 @@
   ;; => [#:members{:login "abc", :name nil}]
   (queries/get-member-by-login ds "abc")
   ;; => [#:members{:login "abc", :name nil}]
-  (queries/get-member-by-login ds "xyz")
+  (queries/get-member-by-login ds "whatever")
+  ;; => []
   (commands/destroy-data! ds)
   ;; => [#:next.jdbc{:update-count 2}]
-  (commands/drop-all-tables! ds)
+  (commands/drop-all-tables! ds))
   ;; => [#:next.jdbc{:update-count 0}]
-  )
 
 (defexpect database-creation-should
-  (expecting "correctly persist data"
-             (expect (= (queries/get-members-by-login ds "abc")
+  (expecting "correctly persist dummy data"
+             (expect (= (queries/get-member-by-login ds "abc")
                         [#:members{:login "abc" :name nil}]))
-             (expect (= (queries/get-members-by-login ds "login")
-                        [#:members{:login "login" :name "name"}])))
+             (expect (= (queries/get-member-by-login ds "login")
+                        [#:members{:login "login" :name "name"}]))
+             (expect (= (queries/get-member-by-login ds "whatever")
+                        [])))
+
+  (expecting "correctly persist additional data"
+             (let [_ (commands/insert-member! {:login "new-login" :name "New Name"})]
+               (expect (= (queries/get-member-by-login ds "new-login")
+                          [#:members{:login "new-login" :name "New Name"}]))))
   (expecting "respect persistence schema"
              (expect (m/validate schemas/members-table (queries/get-all-members ds)))))

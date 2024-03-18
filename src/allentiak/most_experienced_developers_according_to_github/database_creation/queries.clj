@@ -2,7 +2,7 @@
   (:require
    [next.jdbc :as jdbc]))
 
-(defn get-members-by-login
+(defn get-member-by-login
   "Given a member login, return the member record."
   [connectable login]
   (jdbc/execute! connectable
