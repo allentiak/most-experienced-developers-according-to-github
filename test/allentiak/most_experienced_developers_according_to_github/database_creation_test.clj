@@ -55,8 +55,9 @@
   (jdbc/execute! ds
                  ["select * from members where login = 'abc'"])
   ;; => [#:members{:login "abc", :name nil}]
-  (queries/get-members-by-login ds "abc")
+  (queries/get-member-by-login ds "abc")
   ;; => [#:members{:login "abc", :name nil}]
+  (queries/get-member-by-login ds "xyz")
   (commands/destroy-data! ds)
   ;; => [#:next.jdbc{:update-count 2}]
   (commands/drop-all-tables! ds)
