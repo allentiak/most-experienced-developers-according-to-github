@@ -2,6 +2,9 @@
 
 (defn members-response->user-logins-set
   [members-response]
+  ;; another way to do it, using transducers
+  #_(into #{} (comp (distinct)
+                    (map :login)) members-response)
   (into #{} (map :login (set members-response))))
 
 (comment
