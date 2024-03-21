@@ -23,6 +23,7 @@
     (expecting "generate members table from org-name"
           (expect (m/validate schemas/members-table-data generated-members-table-data-set)))
     ;; How should I correctly test this?
+    ;; Should I just duplicate the DB unit tests?
     #_(expecting "persist generated data"
                  (expect ()))))
 
