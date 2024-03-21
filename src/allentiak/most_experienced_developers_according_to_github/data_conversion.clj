@@ -12,6 +12,8 @@
 (defn- user-login-response->members-table-row
   "cleans up the user-login response into a member table row"
   [user-login-response]
+  ;; this does the same with a tansducer
+  ;; (into {} (map (juxt :login :name) user-login-response))
   (select-keys user-login-response [:login :name]))
 
 (comment
