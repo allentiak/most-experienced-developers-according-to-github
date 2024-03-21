@@ -12,8 +12,7 @@
 (defn- user-login-response->members-table-row
   "cleans up the user-login response into a member table row"
   [user-login-response]
-  {:login (:login user-login-response)
-   :name (:name user-login-response)})
+  (select-keys user-login-response [:login :name]))
 
 (comment
   (require '[clojure.edn :as edn])
