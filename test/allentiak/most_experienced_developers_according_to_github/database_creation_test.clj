@@ -74,7 +74,8 @@
                         [])))
 
   (expecting "correctly persist additional data"
-             (let [_ (commands/insert-member! {:login "new-login" :name "New Name"})]
+             (do
+               (commands/insert-member! ds {:login "new-login" :name "New Name"})
                (expect (= (queries/get-member-by-login ds "new-login")
                           [#:members{:login "new-login" :name "New Name"}]))))
   (expecting "respect persistence schema"
