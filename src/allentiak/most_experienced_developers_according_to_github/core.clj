@@ -9,10 +9,11 @@
 (defn generate-members-table
   [org-name]
   (->
-   (fetch/org-members org-name)
-   (convert/members-response->user-logins-set)
-   (fetch/users-data)
-   (convert/user-login-responses-set->members-table-data-set)))
+   org-name
+   fetch/org-members
+   convert/members-response->user-logins-set
+   fetch/users-data
+   convert/user-login-responses-set->members-table-data-set))
 
 (defn persist-members-table!
   [data]
