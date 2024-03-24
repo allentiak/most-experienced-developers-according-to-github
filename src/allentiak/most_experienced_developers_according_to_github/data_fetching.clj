@@ -30,8 +30,7 @@
   )
 (defn users-data
   [user-logins-set]
-  (let [user-login-responses-seq (map user-data-by-login user-logins-set)]
-    user-login-responses-seq))
+  (map user-data-by-login user-logins-set))
 
 (comment
   (users-data #{"allentiak" "puredanger"})
