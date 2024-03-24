@@ -22,8 +22,7 @@
    :dbname "local-db"
    :database_to_upper false})
 
-(def ^:private ds
-  (jdbc/get-datasource db-spec))
+(def ^:dynamic ^:private *conn*)
 
 (def ^:private dummy-data
   #{{:name "name" :login "login"}
@@ -32,19 +31,21 @@
 (defn- with-test-db
   "A test fixture that sets up an in-memory H2 database for running tests."
   [test-fn]
-  (try
-    (commands/create-db-tables! ds)
-    (commands/load-data! ds dummy-data)
-    (catch Exception _))
-  (test-fn)
-  (commands/destroy-data! ds)
-  (commands/drop-all-tables! ds))
+  (binding [*conn* (jdbc/get-datasource db-spec)]
+    (try
+      (commands/create-db-tables! *conn*)
+      (commands/load-data! *conn* dummy-data)
+      (catch Exception _))
+    (test-fn)
+    (commands/destroy-data! *conn*)
+    (commands/drop-all-tables! *conn*)))
 
 (use-fixtures
   :once with-files-path
   :each with-test-db)
 
 (comment
+  (def ^:private ds (jdbc/get-datasource db-spec))
   (commands/create-db-tables! ds)
   ;; => [#:next.jdbc{:update-count 0}]
   (commands/load-data! ds dummy-data)
@@ -66,17 +67,17 @@
 
 (defexpect database-creation-should
   (expecting "correctly persist dummy data"
-             (expect (= (queries/get-member-by-login ds "abc")
+             (expect (= (queries/get-member-by-login *conn* "abc")
                         [#:members{:login "abc" :name nil}]))
-             (expect (= (queries/get-member-by-login ds "login")
+             (expect (= (queries/get-member-by-login *conn* "login")
                         [#:members{:login "login" :name "name"}]))
-             (expect (= (queries/get-member-by-login ds "whatever")
+             (expect (= (queries/get-member-by-login *conn* "whatever")
                         [])))
 
   (expecting "correctly persist additional data"
              (do
-               (commands/insert-member! ds {:login "new-login" :name "New Name"})
-               (expect (= (queries/get-member-by-login ds "new-login")
+               (commands/insert-member! *conn* {:login "new-login" :name "New Name"})
+               (expect (= (queries/get-member-by-login *conn* "new-login")
                           [#:members{:login "new-login" :name "New Name"}]))))
   (expecting "respect persistence schema"
-             (expect (m/validate schemas/members-table (queries/get-all-members ds)))))
+             (expect (m/validate schemas/members-table (queries/get-all-members *conn*)))))
